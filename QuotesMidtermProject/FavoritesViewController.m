@@ -12,7 +12,7 @@
 #import "FavoritesCell.h"
 #import "Category.h"
 
-@interface FavoritesViewController () <UITableViewDataSource>
+@interface FavoritesViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *favTableView;
 @property (strong, nonatomic) NSArray<Category*>* allCategories;
 @property (strong, nonatomic) NSDictionary *quotesDictionary;
@@ -78,7 +78,7 @@
     Category *cat = self.allCategories[indexPath.section];
     SavedQuote *quote = self.quotesDictionary[cat.name][indexPath.row];
     
-    cell.favQuoteText.text = quote.text;
+    cell.favQuoteText.text = [NSString stringWithFormat:@"%@\n\n-%@",quote.text, quote.author];
     return cell;
 }
 
@@ -105,9 +105,22 @@
             NSLog(@"Error: %@", error.localizedDescription);
             abort();
         }
-//        [self.favTableView endUpdates];
         [self viewWillAppear:NO];
     }
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.favTableView beginUpdates];
+    [self.favTableView endUpdates];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if([indexPath isEqual:[self.favTableView indexPathForSelectedRow]]) {
+        return 220.0;
+    }
+    return 44.0;
 }
 
 @end

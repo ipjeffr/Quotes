@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) Quote *quoteToSave;
 @property (strong, nonatomic) NSArray *pickerArray;
+@property (nonatomic, strong) NSString *categoryKey;
 @property BOOL didGatherURLData;
 
 @end

@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Quote;
 
 @interface CatDetailsViewController : UIViewController
-@property (nonatomic, strong) NSString *categoryKey;
 
 @end

@@ -15,8 +15,6 @@
 		3189E5041CB2DFDE0037BB99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3189E5031CB2DFDE0037BB99 /* Assets.xcassets */; };
 		3189E5071CB2DFDE0037BB99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3189E5051CB2DFDE0037BB99 /* LaunchScreen.storyboard */; };
 		3189E5101CB330360037BB99 /* Quote.m in Sources */ = {isa = PBXBuildFile; fileRef = 3189E50F1CB330360037BB99 /* Quote.m */; };
-		3189E5131CB4131D0037BB99 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3189E5121CB4131D0037BB99 /* CategoriesViewController.m */; };
-		3189E5161CB4133F0037BB99 /* CategoriesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3189E5151CB4133F0037BB99 /* CategoriesCell.m */; };
 		3189E5191CB418DC0037BB99 /* CatDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3189E5181CB418DC0037BB99 /* CatDetailsViewController.m */; };
 		31D0C7601CB55FC800F40D95 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0C75F1CB55FC800F40D95 /* FavoritesViewController.m */; };
 		31D0C76A1CB56D3A00F40D95 /* FavoritesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0C7691CB56D3A00F40D95 /* FavoritesCell.m */; };
@@ -40,10 +38,6 @@
 		3189E5081CB2DFDE0037BB99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3189E50E1CB330360037BB99 /* Quote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quote.h; sourceTree = "<group>"; };
 		3189E50F1CB330360037BB99 /* Quote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quote.m; sourceTree = "<group>"; };
-		3189E5111CB4131D0037BB99 /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
-		3189E5121CB4131D0037BB99 /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
-		3189E5141CB4133F0037BB99 /* CategoriesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesCell.h; sourceTree = "<group>"; };
-		3189E5151CB4133F0037BB99 /* CategoriesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesCell.m; sourceTree = "<group>"; };
 		3189E5171CB418DC0037BB99 /* CatDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatDetailsViewController.h; sourceTree = "<group>"; };
 		3189E5181CB418DC0037BB99 /* CatDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatDetailsViewController.m; sourceTree = "<group>"; };
 		31D0C75E1CB55FC800F40D95 /* FavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesViewController.h; sourceTree = "<group>"; };
@@ -94,14 +88,10 @@
 				3189E4F81CB2DFDE0037BB99 /* AppDelegate.m */,
 				3189E4FA1CB2DFDE0037BB99 /* ViewController.h */,
 				3189E4FB1CB2DFDE0037BB99 /* ViewController.m */,
-				3189E5111CB4131D0037BB99 /* CategoriesViewController.h */,
-				3189E5121CB4131D0037BB99 /* CategoriesViewController.m */,
 				3189E5171CB418DC0037BB99 /* CatDetailsViewController.h */,
 				3189E5181CB418DC0037BB99 /* CatDetailsViewController.m */,
 				31D0C75E1CB55FC800F40D95 /* FavoritesViewController.h */,
 				31D0C75F1CB55FC800F40D95 /* FavoritesViewController.m */,
-				3189E5141CB4133F0037BB99 /* CategoriesCell.h */,
-				3189E5151CB4133F0037BB99 /* CategoriesCell.m */,
 				31D0C7681CB56D3A00F40D95 /* FavoritesCell.h */,
 				31D0C7691CB56D3A00F40D95 /* FavoritesCell.m */,
 				3189E50E1CB330360037BB99 /* Quote.h */,
@@ -211,7 +201,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3189E5161CB4133F0037BB99 /* CategoriesCell.m in Sources */,
 				3189E4FC1CB2DFDE0037BB99 /* ViewController.m in Sources */,
 				31D0C7B71CB5AF7900F40D95 /* SavedQuote.m in Sources */,
 				3189E5191CB418DC0037BB99 /* CatDetailsViewController.m in Sources */,
@@ -222,7 +211,6 @@
 				31D0C7B51CB5AF7900F40D95 /* Category.m in Sources */,
 				3189E5101CB330360037BB99 /* Quote.m in Sources */,
 				31D0C76A1CB56D3A00F40D95 /* FavoritesCell.m in Sources */,
-				3189E5131CB4131D0037BB99 /* CategoriesViewController.m in Sources */,
 				3189E4F61CB2DFDE0037BB99 /* main.m in Sources */,
 				31D0C7B61CB5AF7900F40D95 /* SavedQuote+CoreDataProperties.m in Sources */,
 			);
