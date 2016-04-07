@@ -10,4 +10,6 @@
 
 @interface CatDetailsViewController : UIViewController
 
+@property (strong, nonatomic) NSArray *pickerArray;
+
 @end

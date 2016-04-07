@@ -13,6 +13,5 @@
 @property (nonatomic, strong) NSString *quote;
 @property (nonatomic, strong) NSString *author;
 @property (nonatomic, strong) NSString *category;
-//@property (nonatomic, strong) NSString *categoryKey;
 
 @end

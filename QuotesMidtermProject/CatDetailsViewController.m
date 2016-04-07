@@ -20,9 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *randomizeButton;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) Quote *quoteToSave;
-@property (strong, nonatomic) NSArray *pickerArray;
 @property (nonatomic, strong) NSString *categoryKey;
-@property BOOL didGatherURLData;
 
 @end
 
@@ -32,13 +30,19 @@
     [super viewDidLoad];
     self.randomizeButton.enabled = NO;
     self.saveButton.enabled = NO;
-    self.didGatherURLData = NO;
-    [self getDataFromURL];
+    self.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
+
+    [self getDataFromURL:^{
+    }];
     
-    self.pickerArray = [[NSArray alloc] initWithObjects: @"art", @"funny", @"inspire", @"life", @"love", @"management", @"sports", nil];
+//    self.pickerArray = [[NSArray alloc] initWithObjects: @"art", @"funny", @"inspire", @"life", @"love", @"management", @"sports", nil];
 }
 
-- (void)getDataFromURL {
+-(void)viewWillAppear:(BOOL)animated {
+    [self.pickerView reloadAllComponents];
+}
+
+- (void)getDataFromURL:(void(^)())onComplete {
     NSString *urlString = [NSString stringWithFormat:@"http://quotes.rest/quote.json?category=%@&?api_key=_80rR8mylHhzTKCMYfxobAeF", self.categoryKey];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -64,7 +68,7 @@
                     self.quoteToSave = quote;
                     self.randomizeButton.enabled = YES;
                     self.saveButton.enabled = YES;
-                    self.didGatherURLData = YES;
+                    onComplete();
                 });
             }
         } else {
@@ -76,8 +80,6 @@
 
 #pragma mark - Button Methods
 - (IBAction)saveToCoreData:(id)sender {
-    
-    self.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
     
     SavedQuote *newSavedQuote = [NSEntityDescription
                                  insertNewObjectForEntityForName:@"SavedQuote"
@@ -103,9 +105,7 @@
 }
 
 - (IBAction)didPressRandomize:(id)sender {
-    self.didGatherURLData = NO;
-    [self getDataFromURL];
-    if (self.didGatherURLData == YES) {
+    [self getDataFromURL:^{
         NSArray *a = [self fetchForDuplicateQuotes];
         
         if (a.count >= 1) {
@@ -113,24 +113,27 @@
         } else {
             self.saveButton.enabled = YES;
         }
-    }
+    }];
 }
 
 #pragma mark - CoreData Duplicates Checks
 - (NSArray *)fetchForDuplicateQuotes {
-    NSFetchRequest *fetchSavedQuote = [[NSFetchRequest alloc] init];
-    NSEntityDescription *quoteEntity = [NSEntityDescription entityForName:@"SavedQuote" inManagedObjectContext:self.managedObjectContext];
-    fetchSavedQuote.entity = quoteEntity;
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"text == %@",
-                              self.quoteToSave.quote];
-    [fetchSavedQuote setPredicate:predicate];
-    
-    NSError *error;
-    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchSavedQuote error:&error];
-    if (error) {
-        NSLog(@"Error: %@", error.localizedDescription);
-        abort();
+    NSArray *results;
+    if (self.quoteToSave.quote != nil) {
+        NSFetchRequest *fetchSavedQuote = [[NSFetchRequest alloc] init];
+        NSEntityDescription *quoteEntity = [NSEntityDescription entityForName:@"SavedQuote" inManagedObjectContext:self.managedObjectContext];
+        fetchSavedQuote.entity = quoteEntity;
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"text == %@",
+                                  self.quoteToSave.quote];
+        [fetchSavedQuote setPredicate:predicate];
+        
+        NSError *error;
+        results = [self.managedObjectContext executeFetchRequest:fetchSavedQuote error:&error];
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            abort();
+        }
     }
     return results;
 }
@@ -153,11 +156,11 @@
     return results;
 }
 
-#pragma mark - Navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    FavoritesViewController *favoritesVC = [segue destinationViewController];
-    favoritesVC.managedOC = self.managedObjectContext;
-}
+//#pragma mark - Navigation
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    FavoritesViewController *favoritesVC = [segue destinationViewController];
+//    favoritesVC.managedOC = self.managedObjectContext;
+//}
 
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -176,31 +179,8 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    switch(row)
-    {
-        case 0:
-            self.categoryKey = @"art";
-            break;
-        case 1:
-            self.categoryKey = @"funny";
-            break;
-        case 2:
-            self.categoryKey = @"inspire";
-            break;
-        case 3:
-            self.categoryKey = @"life";
-            break;
-        case 4:
-            self.categoryKey = @"love";
-            break;
-        case 5:
-            self.categoryKey = @"management";
-            break;
-        case 6:
-            self.categoryKey = @"sports";
-            break;
-        default:
-            break;
-    }
+    
+    self.categoryKey = self.pickerArray[row];
+    
 }
 @end
