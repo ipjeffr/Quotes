@@ -85,12 +85,20 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.potentialCategories[indexPath.row].didSelectCategory = !self.potentialCategories[indexPath.row].didSelectCategory;
+    PotentialCategory *cat = self.potentialCategories[indexPath.row];
+    
+    cat.didSelectCategory = !cat.didSelectCategory;
     [tableView reloadData];
-//    [self.showPotentialCategories addObject: self.potentialCategories[indexPath.row].categoryName];
-//    self.selectedCategoriesList.text = (NSString *)self.showPotentialCategories;
+    
+    if (cat.didSelectCategory) {
+        [self.showPotentialCategories addObject:cat.categoryName];
+        NSLog(@"===>>>> %@", cat.categoryName);
+    } else if (!cat.didSelectCategory){
+        [self.showPotentialCategories removeObject:cat.categoryName];
+    }
+    NSString *result = [self.showPotentialCategories componentsJoinedByString:@", "];
+    self.selectedCategoriesList.text = result;
 }
-
 
 -(NSArray<NSString*>*)selectedCategoryNames {
     NSMutableArray *selectedCategories = [[NSMutableArray alloc] init];
