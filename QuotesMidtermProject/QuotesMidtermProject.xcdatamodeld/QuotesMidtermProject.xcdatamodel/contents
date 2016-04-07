@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="savedQuotes" toMany="YES" deletionRule="Cascade" destinationEntity="SavedQuote" inverseName="category" inverseEntity="SavedQuote" syncable="YES"/>
+    </entity>
+    <entity name="SavedQuote" representedClassName="SavedQuote" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="savedQuotes" inverseEntity="Category" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SavedQuote" positionX="-344" positionY="18" width="128" height="88"/>
+        <element name="Category" positionX="-54" positionY="9" width="128" height="73"/>
+    </elements>
+</model>
