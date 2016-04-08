@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *favTableView;
 @property (strong, nonatomic) NSArray<Category*>* allCategories;
 @property (strong, nonatomic) NSDictionary *quotesDictionary;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic) CGFloat cellHeight;
 @end
 
 @implementation FavoritesViewController
@@ -23,7 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.managedOC = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
-    self.favTableView.allowsMultipleSelectionDuringEditing = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -73,7 +74,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"favoritesCell";
-    FavoritesCell *cell = [self.favTableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    FavoritesCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     Category *cat = self.allCategories[indexPath.section];
     SavedQuote *quote = self.quotesDictionary[cat.name][indexPath.row];
@@ -110,16 +111,26 @@
 }
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.favTableView beginUpdates];
-    [self.favTableView endUpdates];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.selectedIndexPath == indexPath) {
+        self.selectedIndexPath = nil;
+        [self.favTableView reloadData];
+        return;
+    }
+    self.selectedIndexPath = indexPath;
+    FavoritesCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    self.cellHeight = cell.favQuoteText.intrinsicContentSize.height;
+    [self.favTableView reloadData];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if([indexPath isEqual:[self.favTableView indexPathForSelectedRow]]) {
-        return 220.0;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"indexPath %@", indexPath);
+    NSLog(@"selectedIndexPath %@", self.selectedIndexPath);
+    if ([indexPath compare:self.selectedIndexPath]== NSOrderedSame) {
+        return self.cellHeight + 40;
     }
-    return 88.0;
+    return (CGFloat)44.0;
 }
 
 @end

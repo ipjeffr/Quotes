@@ -32,12 +32,12 @@
     self.saveButton.enabled = NO;
     self.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
     
-    self.categoryQuoteOutput.text = @"Select a Category above\n\n Press 'Get Quote' to show quote here\n\n Press again to get another quote";
+    self.categoryQuoteOutput.text = @"\n\nSelect a Category above\n\n Press 'Get Quote' to show quote here\n\n Press again to get another quote";
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.pickerView reloadAllComponents];
-    [self.pickerView selectRow:0 inComponent:0 animated:YES];
+//    [self.pickerView selectRow:0 inComponent:0 animated:YES];
 }
 
 - (void)getDataFromURL:(void(^)())onComplete {

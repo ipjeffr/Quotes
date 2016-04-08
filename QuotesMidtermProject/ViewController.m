@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) NSMutableArray<PotentialCategory*>* potentialCategories;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *selectedCategoriesList;
+@property (weak, nonatomic) IBOutlet UITextView *selectedCategoriesList;
 @property (strong, nonnull) NSMutableArray *showPotentialCategories;
 
 @end
@@ -75,7 +75,6 @@
     PotentialCategory *potentialCat = self.potentialCategories[indexPath.row];
     
     cell.categoryOutput.text = potentialCat.categoryName;
-    [cell.categoryOutput sizeToFit];
     
      if (potentialCat.didSelectCategory) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -97,9 +96,8 @@
     } else if (!cat.didSelectCategory){
         [self.showPotentialCategories removeObject:cat.categoryName];
     }
-    NSString *result = [self.showPotentialCategories componentsJoinedByString:@", "];
+    NSString *result = [self.showPotentialCategories componentsJoinedByString:@"   "];
     self.selectedCategoriesList.text = result;
-    [self.selectedCategoriesList sizeToFit];
 }
 
 -(NSArray<NSString*>*)selectedCategoryNames {
