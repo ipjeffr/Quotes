@@ -28,19 +28,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.categoryKey = self.pickerArray[0];
     self.randomizeButton.enabled = YES;
     self.saveButton.enabled = NO;
     self.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
     
     self.categoryQuoteOutput.text = @"\n\nSelect a Category above\n\n Press 'Get Quote' to show quote here\n\n Press again to get another quote";
+    self.categoryQuoteOutput.textColor = [UIColor redColor];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.pickerView reloadAllComponents];
-//    [self.pickerView selectRow:0 inComponent:0 animated:YES];
 }
 
 - (void)getDataFromURL:(void(^)())onComplete {
+    
     NSString *urlString = [NSString stringWithFormat:@"http://quotes.rest/quote.json?category=%@&?api_key=_80rR8mylHhzTKCMYfxobAeF", self.categoryKey];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -54,6 +56,7 @@
             NSError *jsonError;
             
             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+            
             if (!jsonError) {
 
                 Quote *quote = [[Quote alloc] init];
@@ -63,8 +66,10 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.categoryQuoteOutput.text = [NSString stringWithFormat:@"%@\n\n-%@", quote.quote, quote.author];
+                    self.categoryQuoteOutput.textColor = [UIColor blackColor];
                     NSLog(@"CATEGORY == %@", quote.category);
                     self.quoteToSave = quote;
+                    
                     self.randomizeButton.enabled = YES;
                     self.saveButton.enabled = YES;
                     NSLog(@"CATEGORYKEY == %@", self.categoryKey);
