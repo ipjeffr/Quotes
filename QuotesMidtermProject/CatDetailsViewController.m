@@ -15,7 +15,7 @@
 
 @interface CatDetailsViewController () <UIPickerViewDelegate, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
-@property (weak, nonatomic) IBOutlet UILabel *categoryQuoteOutput;
+@property (weak, nonatomic) IBOutlet UITextView *categoryQuoteOutput;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *randomizeButton;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -28,18 +28,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.randomizeButton.enabled = NO;
+    self.randomizeButton.enabled = YES;
     self.saveButton.enabled = NO;
     self.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
-
-    [self getDataFromURL:^{
-    }];
     
-//    self.pickerArray = [[NSArray alloc] initWithObjects: @"art", @"funny", @"inspire", @"life", @"love", @"management", @"sports", nil];
+    self.categoryQuoteOutput.text = @"Select a Category above\n\n Press 'Get Quote' to show quote here\n\n Press again to get another quote";
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.pickerView reloadAllComponents];
+    [self.pickerView selectRow:0 inComponent:0 animated:YES];
 }
 
 - (void)getDataFromURL:(void(^)())onComplete {
@@ -57,17 +55,19 @@
             
             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
             if (!jsonError) {
-                // make this just a SavedObject
+
                 Quote *quote = [[Quote alloc] init];
                 quote.quote = jsonObject[@"contents"][@"quote"];
                 quote.author = jsonObject[@"contents"][@"author"];
                 quote.category = jsonObject[@"contents"][@"requested_category"];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    self.categoryQuoteOutput.text = [NSString stringWithFormat:@"%@\n\n\n-%@\n\n%@", quote.quote, quote.author, quote.category];
+                    self.categoryQuoteOutput.text = [NSString stringWithFormat:@"%@\n\n-%@", quote.quote, quote.author];
+                    NSLog(@"CATEGORY == %@", quote.category);
                     self.quoteToSave = quote;
                     self.randomizeButton.enabled = YES;
                     self.saveButton.enabled = YES;
+                    NSLog(@"CATEGORYKEY == %@", self.categoryKey);
                     onComplete();
                 });
             }
@@ -108,10 +108,10 @@
     [self getDataFromURL:^{
         NSArray *a = [self fetchForDuplicateQuotes];
         
-        if (a.count >= 1) {
-            self.saveButton.enabled = NO;
-        } else {
+        if (a.count == 0) {
             self.saveButton.enabled = YES;
+        } else {
+            self.saveButton.enabled = NO;
         }
     }];
 }
@@ -156,31 +156,21 @@
     return results;
 }
 
-//#pragma mark - Navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    FavoritesViewController *favoritesVC = [segue destinationViewController];
-//    favoritesVC.managedOC = self.managedObjectContext;
-//}
-
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (self.pickerArray!=nil) {
-        return [self.pickerArray count];
-    }
-    return 0;
+    return [self.pickerArray count];
 }
 
 #pragma mark - UIPickerViewDelegate
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-        return [self.pickerArray objectAtIndex:row];
+    return [self.pickerArray objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    
     self.categoryKey = self.pickerArray[row];
-    
 }
+
 @end

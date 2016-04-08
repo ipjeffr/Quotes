@@ -119,7 +119,7 @@
     if([indexPath isEqual:[self.favTableView indexPathForSelectedRow]]) {
         return 220.0;
     }
-    return 44.0;
+    return 88.0;
 }
 
 @end

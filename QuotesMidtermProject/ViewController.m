@@ -75,6 +75,7 @@
     PotentialCategory *potentialCat = self.potentialCategories[indexPath.row];
     
     cell.categoryOutput.text = potentialCat.categoryName;
+    [cell.categoryOutput sizeToFit];
     
      if (potentialCat.didSelectCategory) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -98,6 +99,7 @@
     }
     NSString *result = [self.showPotentialCategories componentsJoinedByString:@", "];
     self.selectedCategoriesList.text = result;
+    [self.selectedCategoriesList sizeToFit];
 }
 
 -(NSArray<NSString*>*)selectedCategoryNames {
@@ -114,6 +116,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     CatDetailsViewController *quotesVC = [segue destinationViewController];
     quotesVC.pickerArray = [self selectedCategoryNames];
+    NSLog(@"%@", quotesVC.pickerArray);
 }
 
 @end
