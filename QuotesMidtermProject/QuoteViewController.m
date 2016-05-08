@@ -49,7 +49,7 @@
     self.saveButton.alpha = 0.5;
     self.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
     
-    self.categoryQuoteOutput.text = @"\n\nPick a Category\n\nTap 'Quote'\n\nAdd '+' Categories\n\nSave to Favorites";
+    self.categoryQuoteOutput.text = @"Pick a Category\n\nTap 'Quote'\n\nAdd '+' Categories\n\nSave to Favorites";
     self.categoryQuoteOutput.textColor = [UIColor purpleColor];
 }
 

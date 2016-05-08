@@ -25,14 +25,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.backgroundColor = [UIColor blackColor];
     [self stylizeButtons];
     [self blurBackground];
-    [self getDataFromURL];
-    self.showPotentialCategories = [[NSMutableArray alloc] init];
-}
+    
+    if (self.potentialCategories == nil) {
+        [self getDataFromURL];
+    }
 
-- (void)viewWillAppear:(BOOL)animated {
-    self.tableView.backgroundColor = [UIColor blackColor];
+    self.showPotentialCategories = [[NSMutableArray alloc] init];
 }
 
 - (void)stylizeButtons {
