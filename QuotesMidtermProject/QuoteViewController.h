@@ -1,5 +1,5 @@
 //
-//  CatDetailsViewController.h
+//  QuoteViewController.h
 //  QuotesMidtermProject
 //
 //  Created by Jeffrey Ip on 2016-04-05.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CatDetailsViewController : UIViewController
-
-@property (strong, nonatomic) NSArray *pickerArray;
+@interface QuoteViewController : UIViewController
 
 @end

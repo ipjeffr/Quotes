@@ -1,17 +1,17 @@
 //
-//  ViewController.m
+//  CategoryViewController.m
 //  QuotesMidtermProject
 //
 //  Created by Jeffrey Ip on 2016-04-04.
 //  Copyright © 2016 Jeffrey Ip. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "CatDetailsViewController.h"
+#import "CategoryViewController.h"
+#import "QuoteViewController.h"
 #import "PotentialCategory.h"
 #import "CategoryCell.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface CategoryViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray<PotentialCategory*>* potentialCategories;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation ViewController
+@implementation CategoryViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +28,7 @@
     self.showPotentialCategories = [[NSMutableArray alloc] init];
 }
 
--(void)getDataFromURL {
+- (void)getDataFromURL {
     NSURL *url = [NSURL URLWithString:@"http://quotes.rest/quote/categories.json?start=300&?api_key=_80rR8mylHhzTKCMYfxobAeF"];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
 
@@ -84,7 +84,7 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     PotentialCategory *cat = self.potentialCategories[indexPath.row];
     
     cat.didSelectCategory = !cat.didSelectCategory;
@@ -100,7 +100,7 @@
     self.selectedCategoriesList.text = result;
 }
 
--(NSArray<NSString*>*)selectedCategoryNames {
+- (NSArray<NSString*>*)selectedCategoryNames {
     NSMutableArray *selectedCategories = [[NSMutableArray alloc] init];
     
     for (PotentialCategory *cat in self.potentialCategories) {
@@ -111,10 +111,11 @@
     return [selectedCategories copy];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    CatDetailsViewController *quotesVC = [segue destinationViewController];
-    quotesVC.pickerArray = [self selectedCategoryNames];
-    NSLog(@"%@", quotesVC.pickerArray);
+- (IBAction)didSaveCategories:(id)sender {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(addCategoriesToPicker:)]) {
+        [self.delegate addCategoriesToPicker:self.selectedCategoryNames];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

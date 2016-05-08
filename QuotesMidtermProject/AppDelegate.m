@@ -16,7 +16,21 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+//    [[UITabBar appearance] setBackgroundColor:[UIColor blueColor]];
+    
+//    UITabBarController *tbController = (UITabBarController *)self.window.rootViewController;
+    
+//    UITabBar *tbAppearance = [UITabBar appearance];
+//    
+//    tbAppearance.backgroundColor = [UIColor colorWithWhite:1 alpha:0.1];
+//    
+//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+//    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    blurEffectView.frame = tbAppearance.bounds;
+//    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    [tbAppearance insertSubview:blurEffectView atIndex:0];
+    
     return YES;
 }
 
@@ -110,7 +124,6 @@
 }
 
 #pragma mark - Core Data Saving support
-
 - (void)saveContext {
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {

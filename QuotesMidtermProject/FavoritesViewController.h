@@ -10,5 +10,7 @@
 @class AppDelegate;
 
 @interface FavoritesViewController : UIViewController
+
 @property (strong, nonatomic) NSManagedObjectContext *managedOC;
+
 @end
