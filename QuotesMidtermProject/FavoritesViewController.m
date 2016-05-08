@@ -133,4 +133,8 @@
     return (CGFloat)44.0;
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
+}
+
 @end

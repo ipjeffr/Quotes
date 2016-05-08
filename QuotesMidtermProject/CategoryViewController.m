@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *selectedCategoriesList;
 @property (strong, nonnull) NSMutableArray *showPotentialCategories;
+@property (weak, nonatomic) IBOutlet UIButton *saveCategoriesButton;
 
 @end
 
@@ -24,8 +25,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self stylizeButtons];
+    [self blurBackground];
     [self getDataFromURL];
     self.showPotentialCategories = [[NSMutableArray alloc] init];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.tableView.backgroundColor = [UIColor blackColor];
+}
+
+- (void)stylizeButtons {
+    self.saveCategoriesButton.layer.cornerRadius = 5;
+    self.saveCategoriesButton.layer.borderWidth = 2;
+    self.saveCategoriesButton.layer.borderColor = [UIColor blackColor].CGColor;
+}
+
+- (void)blurBackground {
+    self.view.backgroundColor = [UIColor colorWithWhite:1 alpha:0.75];
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view insertSubview:blurEffectView atIndex:0];
 }
 
 - (void)getDataFromURL {
@@ -64,6 +87,8 @@
     [dataTask resume];
 }
 
+
+#pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.potentialCategories.count;
 }
@@ -84,6 +109,7 @@
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     PotentialCategory *cat = self.potentialCategories[indexPath.row];
     
@@ -98,6 +124,10 @@
     }
     NSString *result = [self.showPotentialCategories componentsJoinedByString:@"   "];
     self.selectedCategoriesList.text = result;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor colorWithWhite:1 alpha:0.95];
 }
 
 - (NSArray<NSString*>*)selectedCategoryNames {

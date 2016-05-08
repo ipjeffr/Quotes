@@ -69,7 +69,7 @@
 }
 
 - (void)blurBackground {
-    self.view.backgroundColor = [UIColor colorWithWhite:1 alpha:0.6];
+    self.view.backgroundColor = [UIColor colorWithWhite:1 alpha:0.75];
     
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
